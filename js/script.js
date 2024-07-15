@@ -3,7 +3,7 @@ const bulb = document.getElementById("bulb");
 
 const getLedStatus = async function () {
   try {
-    const response = await fetch("/api/set_led_status", {
+    const response = await fetch("/api/get_led_status", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -11,7 +11,7 @@ const getLedStatus = async function () {
     });
     if (response.ok) {
       const [{ status }] = await response.json();
-      // console.log(status);
+      console.log(status);
       updateToggleSwitch(status);
     } else {
       console.error("Failed to set LED status");

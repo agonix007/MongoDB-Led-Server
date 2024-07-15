@@ -10,18 +10,7 @@ const handler = async (event) => {
     const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
     const collection = database.collection(process.env.MONGODB_COLLECTION);
 
-    if (event.httpMethod === "GET") {
-      // Fetch the last 10 entries
-      const results = await collection
-        .find({})
-        .sort({ timestamp: -1 })
-        .limit(1)
-        .toArray();
-      return {
-        statusCode: 200,
-        body: JSON.stringify(results),
-      };
-    } else if (event.httpMethod === "POST") {
+    if (event.httpMethod === "POST") {
       // Insert a new entry with timestamp
       const body = JSON.parse(event.body);
       const newEntry = {
