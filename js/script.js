@@ -1,21 +1,35 @@
 const checkbox = document.getElementById("checkbox");
 const bulb = document.getElementById("bulb");
 
-// const setLedStatus = async function (status) {
-//   console.log(status);
-//   try {
-//     const response = await fetch("/api/set_led_status");
-//     if (response.ok) {
-//       data = await response.json();
-//     }
-//     console.log(data);
-//   } catch (error) {
-//     console.error("Failed to Fetch Data." + error);
-//   }
-// };
+const getLedStatus = async function () {
+  try {
+    const response = await fetch("/api/set_led_status", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const [{ status }] = await response.json();
+      // console.log(status);
+      updateToggleSwitch(status);
+    } else {
+      console.error("Failed to set LED status");
+    }
+  } catch (error) {
+    console.error("Failed to Fetch Data: " + error);
+  }
+};
+
+function updateToggleSwitch(status) {
+  const checkbox = document.getElementById("checkbox");
+  checkbox.checked = status;
+}
+
+getLedStatus();
 
 const setLedStatus = async function (status) {
-  console.log(status);
+  // console.log(status);
   try {
     const response = await fetch("/api/set_led_status", {
       method: "POST",
@@ -26,7 +40,7 @@ const setLedStatus = async function (status) {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
     } else {
       console.error("Failed to set LED status");
     }

@@ -15,7 +15,7 @@ const handler = async (event) => {
       const results = await collection
         .find({})
         .sort({ timestamp: -1 })
-        .limit(10)
+        .limit(1)
         .toArray();
       return {
         statusCode: 200,
